@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.uea.team.StoryTelling.database.StoryRepository;
+import com.uea.team.StoryTelling.dtos.AddSnippetDTO;
 import com.uea.team.StoryTelling.dtos.AddStoryDTO;
 import com.uea.team.StoryTelling.models.Story;
 
@@ -25,6 +26,13 @@ public class StoryService {
         }
 
         this.repository.save(story);
+        return story;
+    }
+
+    public Story addSnippetToStory(AddSnippetDTO newSnippet) {
+        Story story = getStoryById(newSnippet.getStoryId());
+        story.addSnippet(newSnippet.getSnippet());
+        repository.update(story);
         return story;
     }
 

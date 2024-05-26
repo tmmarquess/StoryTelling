@@ -1,10 +1,11 @@
 package com.uea.team.StoryTelling.Blockchain;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
-public class Block {
+public class Block implements Serializable{
 
   private int index;
   private long timestamp;

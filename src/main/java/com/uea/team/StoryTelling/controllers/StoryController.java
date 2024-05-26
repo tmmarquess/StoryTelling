@@ -41,15 +41,12 @@ public class StoryController {
 
     @PostMapping("/createStory")
     public String createStory(@RequestBody AddStoryDTO entity) {
-        System.out.println(new Gson().toJson(entity));
-        return this.service.createStory(entity).toString();
+        return json.toJson(this.service.createStory(entity));
     }
 
     @PostMapping("/addSnippet")
     public String addSnippet(@RequestBody AddSnippetDTO entity) {
-        System.out.println(entity);
-
-        return entity.toString();
+        return json.toJson(this.service.addSnippetToStory(entity));
     }
 
 }

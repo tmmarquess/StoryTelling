@@ -1,6 +1,8 @@
 package com.uea.team.StoryTelling.Blockchain;
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable {
     private int entityId;
     private String action; // "create", "update", "delete"
     private String data;
