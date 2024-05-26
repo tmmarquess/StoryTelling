@@ -10,16 +10,20 @@ public class Story {
 
     private List<Snippet> snippets;
 
+    private boolean isDeleted;
+
     public Story(int id, String name) {
         this.id = id;
         this.name = name;
         this.snippets = new ArrayList<>();
+        isDeleted = false;
     }
 
     public Story(int id, String name, List<Snippet> snippets) {
         this.id = id;
         this.name = name;
         this.snippets = snippets;
+        isDeleted = false;
     }
 
     public Story() {
@@ -65,7 +69,15 @@ public class Story {
 
     @Override
     public String toString() {
-        return "Story [id=" + id + ", name=" + name + ", story=" + getStory() + "]";
+        return "Story [id=" + id + ", name=" + name + ", story=" + getStory() + ", deleted=" + isDeleted + "]";
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
 }

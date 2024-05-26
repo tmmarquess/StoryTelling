@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import com.uea.team.StoryTelling.Blockchain.Blockchain;
+import com.uea.team.StoryTelling.Blockchain.BlockchainNotValidException;
 
 public class Database {
     public static Database INSTANCE = new Database();
@@ -33,7 +34,10 @@ public class Database {
         }
     }
 
-    public void saveBlockchain() {
+    public void saveBlockchain() throws BlockchainNotValidException {
+        if (!blockchain.isBlockChainValid()) {
+            throw new BlockchainNotValidException("blockchain is not valid");
+        }
         try {
             ObjectOutputStream objectOut = new ObjectOutputStream(
                     new BufferedOutputStream(new FileOutputStream(blockchainFileName)));
