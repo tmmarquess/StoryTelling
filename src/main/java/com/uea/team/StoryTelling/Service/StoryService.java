@@ -7,6 +7,9 @@ import com.google.gson.JsonElement;
 import com.uea.team.StoryTelling.database.StoryRepository;
 import com.uea.team.StoryTelling.dtos.AddSnippetDTO;
 import com.uea.team.StoryTelling.dtos.AddStoryDTO;
+import com.uea.team.StoryTelling.dtos.EditSnippetDTO;
+import com.uea.team.StoryTelling.dtos.EditStoryDTO;
+import com.uea.team.StoryTelling.models.Snippet;
 import com.uea.team.StoryTelling.models.Story;
 
 @Service
@@ -42,5 +45,20 @@ public class StoryService {
 
     public Story getStoryById(int id) {
         return this.repository.geStoryById(id);
+    }
+
+    public Snippet editSnippet(EditSnippetDTO snippetDTO) {
+        Story story = getStoryById(snippetDTO.getStoryId());
+        Snippet snippet = story.getSnippets().get(snippetDTO.getSnippetId());
+        snippet.setContent(snippetDTO.getSnippet());
+        repository.update(story);
+        return snippet;
+    }
+
+    public Story editStory(EditStoryDTO storyDTO){
+        Story story = getStoryById(storyDTO.getStoryId());
+        story.setName(storyDTO.getName());
+        repository.update(story);
+        return story;
     }
 }

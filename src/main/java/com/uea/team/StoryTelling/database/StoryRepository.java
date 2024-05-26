@@ -1,12 +1,5 @@
 package com.uea.team.StoryTelling.database;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,36 +11,11 @@ import com.uea.team.StoryTelling.models.Story;
 public class StoryRepository {
 
     private Blockchain blockchain;
-    private String blockchainFileName = "./database.blkc";
+    private Database database;
 
     public StoryRepository() {
-        loadBlockchain();
-    }
-
-    private void loadBlockchain() {
-        try {
-            ObjectInputStream objectIn = new ObjectInputStream(
-                    new BufferedInputStream(new FileInputStream(blockchainFileName)));
-            Blockchain bl = (Blockchain) objectIn.readObject();
-            objectIn.close();
-            this.blockchain = bl;
-        } catch (IOException exception) {
-            this.blockchain = new Blockchain(3);
-        } catch (ClassNotFoundException e) {
-            System.out.println("uerrrr");
-        }
-    }
-
-    private void saveBlockchain() {
-        try {
-            ObjectOutputStream objectOut = new ObjectOutputStream(
-                    new BufferedOutputStream(new FileOutputStream(blockchainFileName)));
-            objectOut.writeObject(this.blockchain);
-            objectOut.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("uerrrr");
-        }
+        this.database = Database.INSTANCE;
+        this.blockchain = database.blockchain;
     }
 
     public Story save(Story newStory) {
@@ -56,7 +24,7 @@ public class StoryRepository {
         Transaction t = new Transaction(newStory.getId(), "create", new Gson().toJson(newStory));
         blockchain.addBlock(t);
 
-        saveBlockchain();
+        database.saveBlockchain();
         return newStory;
     }
 
@@ -64,7 +32,7 @@ public class StoryRepository {
         Transaction t = new Transaction(story.getId(), "update", new Gson().toJson(story));
         blockchain.addBlock(t);
 
-        saveBlockchain();
+        database.saveBlockchain();
         return story;
     }
 

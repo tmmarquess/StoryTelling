@@ -1,7 +1,5 @@
 package com.uea.team.StoryTelling.controllers;
 
-import java.util.ArrayList;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,13 +7,14 @@ import com.google.gson.Gson;
 import com.uea.team.StoryTelling.Service.StoryService;
 import com.uea.team.StoryTelling.dtos.AddSnippetDTO;
 import com.uea.team.StoryTelling.dtos.AddStoryDTO;
-import com.uea.team.StoryTelling.models.Snippet;
-import com.uea.team.StoryTelling.models.Story;
+import com.uea.team.StoryTelling.dtos.EditSnippetDTO;
+import com.uea.team.StoryTelling.dtos.EditStoryDTO;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/story")
@@ -44,9 +43,19 @@ public class StoryController {
         return json.toJson(this.service.createStory(entity));
     }
 
+    @PutMapping("/editStory")
+    public String editStory(@RequestBody EditStoryDTO entity) {
+        return json.toJson(this.service.editStory(entity));
+    }
+
     @PostMapping("/addSnippet")
     public String addSnippet(@RequestBody AddSnippetDTO entity) {
         return json.toJson(this.service.addSnippetToStory(entity));
+    }
+
+    @PutMapping("/editSnippet")
+    public String putMethodName(@RequestBody EditSnippetDTO entity) {
+        return json.toJson(this.service.editSnippet(entity));
     }
 
 }
